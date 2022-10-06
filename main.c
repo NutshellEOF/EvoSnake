@@ -1,10 +1,14 @@
+//
+// Created by NutshellEOF on 2022/10/2.
+//
+
 #include <curses.h>
 #include <stdlib.h>
 #include "util.h"
 #include "evosnake.h"
 
 /*
-Compile: gcc main.c -lncurses
+Compile: gcc *.c -lncurses
 */
 int main()
 {
@@ -45,7 +49,6 @@ int main()
     }
     terminate(length,score);
     getchar();
-    endwin();
-                /* 结束curses 模式*/
+    endwin(); /* 结束curses 模式*/
     return 0;
 }

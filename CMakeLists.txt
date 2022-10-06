@@ -9,7 +9,6 @@ set(CMAKE_CXX_COMPILER /usr/bin/g++)
 add_executable(EvoSnake
         main.c
         util.h
-        evosnake.h evosnake.c
-        greet.h greet.c)
+        evosnake.h evosnake.c)
 
 target_link_libraries(EvoSnake ncurses)

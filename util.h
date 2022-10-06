@@ -8,6 +8,7 @@
 #define MAP_L 60
 #define MAP_H 20
 
+//这样设置是为了免判断直接确定位置
 #define UP      (-MAP_L-2)
 #define DOWN    (MAP_L+2)
 #define LEFT    (-1)
@@ -21,9 +22,11 @@ typedef struct {
     int stat;
 } MapBlock;
 
+//双链表结构约定
 struct Snake {
     int dest;
     struct Snake *next;
+    struct Snake *pre;
 };
 
 #endif //EVOSNAKE_UTIL_H
