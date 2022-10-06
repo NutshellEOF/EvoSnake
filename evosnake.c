@@ -89,15 +89,18 @@ int moveSnake(MapBlock *map, struct Snake **ptrs,int length, direction t) {
 
     nhead->dest = ptrs[0]->dest + t;
     nhead->next=ptrs[0];
-    //是否进化的标志位
-    int flag = 0;
     struct Snake *addedtail = malloc(sizeof(struct Snake));
     if (map[nhead->dest].stat==3) {
-        length++;flag=1;
+        length++;
         gFood(map);
 
-        addedtail->dest=ptrs[0]->dest+t;
+        addedtail->dest=ptrs[1]->dest-t;
         addedtail->next=NULL;
+        ptrs[1]->next=addedtail;
+        ptrs[2]=ptrs[1];
+        ptrs[1]=addedtail;
+        map[addedtail->dest].stat=2;
+        drawMap(map,addedtail->dest);
     }
     //撞墙或吃到自己
     else if (map[nhead->dest].stat==-1||map[nhead->dest].stat==2) {
@@ -117,20 +120,9 @@ int moveSnake(MapBlock *map, struct Snake **ptrs,int length, direction t) {
     ptrs[1]=ptrs[2];
     //tmp指向原尾节点的前节点，ptrs[2]在后面几步后要给尾节点赋值
     struct Snake *tmp = ptrs[0];
-    //清除原尾节点，不要忘了free掉内存
+    //清除原尾节点
     ptrs[2]->next=NULL;
     free(tail);
-    //ptrs[2]=nhead;//修改此处！
-    //暂时用下列代替，如果有更好的办法那一定是重写结构
-    //若已经检测到进化，则撤销尾节点操作
-    if (flag==1) {
-        //usleep(400*1000);
-        addedtail->next=ptrs[0];
-        ptrs[0]=addedtail;
-        drawMap(map,addedtail->dest);
-
-    }
-
     if (length==2) {
         ptrs[2]=nhead;
         return length;

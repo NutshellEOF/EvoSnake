@@ -8,13 +8,14 @@ Compile: gcc main.c -lncurses
 */
 int main()
 {
+    //设置窗口
     initscr();
     noecho();
     cbreak();
     keypad(stdscr,TRUE);
     system("clear");
     halfdelay(4);
-
+    //初始化地图
     MapBlock *map =malloc(sizeof(MapBlock)*(MAP_L+2)*(MAP_H+2));
     int length = 2;
     struct Snake **ptrs = initSnake(map);
