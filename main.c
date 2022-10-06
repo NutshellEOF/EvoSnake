@@ -13,7 +13,6 @@ int main()
     noecho();
     cbreak();
     keypad(stdscr,TRUE);
-    system("clear");
     halfdelay(4);
     //初始化地图
     MapBlock *map =malloc(sizeof(MapBlock)*(MAP_L+2)*(MAP_H+2));
