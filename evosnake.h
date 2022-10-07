@@ -9,6 +9,8 @@
 
 #include "util.h"
 
+void init();
+
 MapBlock *initMap(MapBlock *map);
 
 void drawMap(MapBlock *map, int changeId);
@@ -16,6 +18,8 @@ void drawMap(MapBlock *map, int changeId);
 void gFood(MapBlock *map);
 
 struct Snake **initSnake(MapBlock *map);
+
+direction getd(direction pt);
 
 int moveSnake(MapBlock *map, struct Snake **ptrs, int length, direction t);
 

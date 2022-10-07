@@ -22,7 +22,6 @@ typedef struct {
     int stat;
 } MapBlock;
 
-//双链表结构约定
 struct Snake {
     int dest;
     struct Snake *next;

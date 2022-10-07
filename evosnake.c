@@ -8,6 +8,21 @@
 #include <time.h>
 #include "util.h"
 
+void init() {
+    //设置窗口
+    initscr();
+    noecho();
+    cbreak();
+    keypad(stdscr,TRUE);
+    halfdelay(3);
+//    if (has_colors() == FALSE) {
+//        endwin();
+//        printf("Your terminal does not support color\n");
+//        exit(1);
+//    }
+//    start_color();
+}
+
 char blockDisplay(int stat) {
     switch (stat) {
         case -1:
@@ -15,7 +30,7 @@ char blockDisplay(int stat) {
         case 3:
             return '*';
         case 2:
-            return '+';
+            return 'o';
         case 1:
             return '@';
         default:
@@ -47,17 +62,38 @@ void drawMap(MapBlock *map, int changeId) {
 
 void gFood(MapBlock *map) {
     srand(time(NULL));
-    int fid = rand()%((MAP_H+2)*(MAP_L+2));
+    int fid = rand() % ((MAP_H+2)*(MAP_L+2));
     while (map[fid].stat != 0){
-        fid = rand()%((MAP_H+2)*(MAP_L+2));
+        fid = rand() % ((MAP_H+2)*(MAP_L+2));
     }
     map[fid].stat = 3;
     drawMap(map,fid);
 }
 
+direction getd(direction pt) {
+    direction tmp = pt;
+    switch (getch()) {
+        case KEY_DOWN:
+            tmp = DOWN;
+            break;
+        case KEY_UP:
+            tmp = UP;
+            break;
+        case KEY_LEFT:
+            tmp = LEFT;
+            break;
+        case KEY_RIGHT:
+            tmp = RIGHT;
+            break;
+    }
+    (tmp+pt == 0)?tmp=pt:tmp;
+    return tmp;
+}
+
 struct Snake **initSnake(MapBlock *map) {
     int x = MAP_L/2 + 1;
     int y = MAP_H/2 + 1;
+
 
     int head = y*(MAP_L+2) + x;
     map[head].stat = 1;
