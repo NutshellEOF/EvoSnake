@@ -8,6 +8,12 @@
 #define MAP_L 60
 #define MAP_H 20
 
+//Color setup
+#define MAP_PAIR 1
+#define SNAKE_PAIR 2
+#define FOOD_PAIR 3
+#define ERR_PAIR 4
+
 //这样设置是为了免判断直接确定位置
 #define UP      (-MAP_L-2)
 #define DOWN    (MAP_L+2)

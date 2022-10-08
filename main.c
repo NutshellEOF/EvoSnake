@@ -25,7 +25,7 @@ int main()
         t=getd(t);
         score=(length-2)*10;
         length = moveSnake(map,ptrs,length,t);
-        mvaddch(MAP_H+1,MAP_L+1,'#');
+        mvaddch(MAP_H+1,MAP_L+2,' ');
     }
     terminate(length,score);
     getchar();
