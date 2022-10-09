@@ -8,6 +8,8 @@
 #include <time.h>
 #include "util.h"
 
+MapBlock *map;
+
 void init() {
     //设置窗口
     initscr();
@@ -16,17 +18,21 @@ void init() {
     keypad(stdscr,TRUE);
     halfdelay(3);
     if (has_colors() == FALSE) {
-        endwin();
         printf("Your terminal does not support color.\n");
-        exit(2);
+        printf("We will work in no-color mode\n");
+        printf("Press any key to continue.");
+        getchar();
+        endwin();
+        exit(3);
     }
-    int c,r = 0;//判断大小是否合适
+    int c,r;//判断大小是否合适
     getmaxyx(stdscr, r, c);
     if (r <= MAP_H+1 || c <= MAP_L+2) {
         endwin();
         printf("Terminal size error, %dx%d is required.\n",MAP_L,MAP_H);
-        exit(3);
+        exit(2);
     }
+    map = (MapBlock *) malloc(sizeof(MapBlock) * (MAP_L + 2) * (MAP_H + 2));
     start_color();
     init_pair(MAP_PAIR, COLOR_YELLOW, COLOR_BLACK);
     init_pair(SNAKE_PAIR, COLOR_CYAN, COLOR_BLACK);
@@ -49,7 +55,7 @@ char blockDisplay(int stat) {
     }
 }
 
-MapBlock *initMap(MapBlock *map) {
+void initMap() {
     attron(COLOR_PAIR(MAP_PAIR));
     for (int i = 0; i < (MAP_H+2)*(MAP_L+2); ++i) {
         map[i].x = i % (MAP_L + 2);
@@ -67,7 +73,7 @@ MapBlock *initMap(MapBlock *map) {
     attroff(COLOR_PAIR(MAP_PAIR));
 }
 
-void drawMap(MapBlock *map, int changeId, int pairId) {
+void drawMap(int changeId, int pairId) {
     attron(COLOR_PAIR(pairId));
     mvaddch(map[changeId].y,map[changeId].x,
             blockDisplay(map[changeId].stat));
@@ -75,14 +81,14 @@ void drawMap(MapBlock *map, int changeId, int pairId) {
     refresh();
 }
 
-void gFood(MapBlock *map) {
+void gFood() {
     srand(time(NULL));
     int fid = rand() % ((MAP_H+2)*(MAP_L+2));
     while (map[fid].stat != 0){
         fid = rand() % ((MAP_H+2)*(MAP_L+2));
     }
     map[fid].stat = 3;
-    drawMap(map,fid, FOOD_PAIR);
+    drawMap(fid, FOOD_PAIR);
 }
 
 direction getd(direction pt) {
@@ -105,7 +111,7 @@ direction getd(direction pt) {
     return tmp;
 }
 
-struct Snake **initSnake(MapBlock *map) {
+struct Snake **initSnake() {
     int x = MAP_L/2 + 1;
     int y = MAP_H/2 + 1;
 
@@ -113,8 +119,8 @@ struct Snake **initSnake(MapBlock *map) {
     int head = y*(MAP_L+2) + x;
     map[head].stat = 1;
     map[head+1].stat = 2;
-    drawMap(map, head, SNAKE_PAIR);
-    drawMap(map, head+1, SNAKE_PAIR);
+    drawMap(head, SNAKE_PAIR);
+    drawMap(head+1, SNAKE_PAIR);
 
     struct Snake *ptr = (struct Snake *)malloc(sizeof(struct Snake));
 
@@ -135,12 +141,12 @@ struct Snake **initSnake(MapBlock *map) {
     return ptrs;
 }
 
-int moveSnake(MapBlock *map, struct Snake **ptrs,int length, direction t) {
+int moveSnake(struct Snake **ptrs,int length, direction t) {
     /* 这些代码先后顺序非常重要，谨慎更改！ */
     struct Snake *nhead = (struct Snake *) malloc(sizeof(struct Snake)); //新的头节点
 
     map[ptrs[0]->dest].stat = 2;//将原来的头在地图中改为身体
-    drawMap(map, ptrs[0]->dest,SNAKE_PAIR);
+    drawMap(ptrs[0]->dest,SNAKE_PAIR);
 
     nhead->dest = ptrs[0]->dest + t;
     nhead->next = ptrs[0];
@@ -152,7 +158,7 @@ int moveSnake(MapBlock *map, struct Snake **ptrs,int length, direction t) {
     if (map[ptrs[0]->dest].stat == 3) {
         struct Snake *addedtail = (struct Snake *)malloc(sizeof(struct Snake));
         length++;
-        gFood(map);
+        gFood();
 
         addedtail->dest = ptrs[1]->dest-t;//先在链表后面加一个，实际上在后面这个节点要被去掉
         addedtail->next = NULL;
@@ -161,7 +167,7 @@ int moveSnake(MapBlock *map, struct Snake **ptrs,int length, direction t) {
         ptrs[1]->next = addedtail;
         ptrs[1] = addedtail;
         map[addedtail->dest].stat = 2;
-        drawMap(map,addedtail->dest, SNAKE_PAIR);
+        drawMap(addedtail->dest, SNAKE_PAIR);
     }
     //撞墙或吃到自己
     else if (map[nhead->dest].stat == -1 || map[nhead->dest].stat == 2) {
@@ -169,11 +175,11 @@ int moveSnake(MapBlock *map, struct Snake **ptrs,int length, direction t) {
     }
 
     map[nhead->dest].stat = 1;
-    drawMap(map,nhead->dest,SNAKE_PAIR);
+    drawMap(nhead->dest,SNAKE_PAIR);
     //清掉最后的节点
     struct Snake *tail = ptrs[1];
     map[tail->dest].stat = 0;
-    drawMap(map, tail->dest, SNAKE_PAIR);
+    drawMap(tail->dest, SNAKE_PAIR);
 
     ptrs[1] = tail->pre;
     free(tail);

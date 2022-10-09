@@ -54,3 +54,6 @@ dkms.conf
 # cmake
 .idea
 cmake-build-debug
+
+# archived
+.archive

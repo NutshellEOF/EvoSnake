@@ -28,6 +28,7 @@ typedef struct {
     int stat;
 } MapBlock;
 
+//linktable for snake array
 struct Snake {
     int dest;
     struct Snake *next;

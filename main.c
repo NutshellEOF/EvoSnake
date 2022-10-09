@@ -3,7 +3,6 @@
 //
 
 #include <curses.h>
-#include <stdlib.h>
 #include "util.h"
 #include "evosnake.h"
 
@@ -13,18 +12,16 @@ Compile: gcc *.c -lncurses
 int main()
 {
     init();
-    //初始化地图
-    MapBlock *map = (MapBlock *) malloc(sizeof(MapBlock)*(MAP_L+2)*(MAP_H+2));
     int length = 2;
-    struct Snake **ptrs = initSnake(map);
-    initMap(map);
+    struct Snake **ptrs = initSnake();
+    initMap();
     direction t =LEFT;
-    gFood(map);
+    gFood();
     int score=0;
     while (length!=0) {
         t=getd(t);
         score=(length-2)*10;
-        length = moveSnake(map,ptrs,length,t);
+        length = moveSnake(ptrs,length,t);
         mvaddch(MAP_H+1,MAP_L+2,' ');
     }
     terminate(length,score);

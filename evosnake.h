@@ -5,22 +5,24 @@
 #ifndef EVOSNAKE_EVOSNAKE_H
 #define EVOSNAKE_EVOSNAKE_H
 
-#endif //EVOSNAKE_EVOSNAKE_H
-
 #include "util.h"
+
+extern MapBlock *map;
 
 void init();
 
-MapBlock *initMap(MapBlock *map);
+void initMap();
 
-void drawMap(MapBlock *map, int changeId);
+void drawMap(int changeId);
 
-void gFood(MapBlock *map);
+void gFood();
 
-struct Snake **initSnake(MapBlock *map);
+struct Snake **initSnake();
 
 direction getd(direction pt);
 
-int moveSnake(MapBlock *map, struct Snake **ptrs, int length, direction t);
+int moveSnake(struct Snake **ptrs, int length, direction t);
 
 void terminate(int code, int score);
+
+#endif //EVOSNAKE_EVOSNAKE_H
