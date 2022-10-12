@@ -19,7 +19,7 @@ void init() {
     halfdelay(3);
     if (has_colors() == FALSE) {
         printf("Your terminal does not support color.\n");
-        printf("We will work in no-color mode\n");
+        //printf("We will work in no-color mode\n");
         printf("Press any key to continue.");
         getchar();
         endwin();

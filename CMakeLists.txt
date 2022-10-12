@@ -1,3 +1,5 @@
+# This CMakeLists.txt is suitable for CLion
+# Change it in your own workspace
 cmake_minimum_required(VERSION 3.24)
 project(EvoSnake C)
 

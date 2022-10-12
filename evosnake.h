@@ -13,7 +13,7 @@ void init();
 
 void initMap();
 
-void drawMap(int changeId);
+void drawMap(int changeId, int pairId);
 
 void gFood();
 
