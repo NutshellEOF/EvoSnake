@@ -13,6 +13,7 @@
 #define SNAKE_PAIR 2
 #define FOOD_PAIR 3
 #define ERR_PAIR 4
+#define DHEAD_PAIR 5
 
 //这样设置是为了免判断直接确定位置
 #define UP      (-MAP_L-2)

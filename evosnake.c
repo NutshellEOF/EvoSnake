@@ -38,6 +38,7 @@ void init() {
     init_pair(SNAKE_PAIR, COLOR_CYAN, COLOR_BLACK);
     init_pair(FOOD_PAIR, COLOR_RED, COLOR_BLACK);
     init_pair(ERR_PAIR, COLOR_CYAN, COLOR_BLACK);
+    init_pair(DHEAD_PAIR, COLOR_RED, COLOR_BLACK);
 }
 
 char blockDisplay(int stat) {
@@ -171,6 +172,11 @@ int moveSnake(struct Snake **ptrs,int length, direction t) {
     }
     //撞墙或吃到自己
     else if (map[nhead->dest].stat == -1 || map[nhead->dest].stat == 2) {
+        int x = map[nhead->dest].x;
+        int y = map[nhead->dest].y;
+        attron(COLOR_PAIR(DHEAD_PAIR));
+        mvaddch(y,x,'X');
+        attroff(COLOR_PAIR(DHEAD_PAIR));
         return 0;
     }
 
