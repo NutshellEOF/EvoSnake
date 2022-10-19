@@ -12,7 +12,7 @@ Compile: gcc *.c -lncurses
 int main()
 {
     init();
-    int length = 2;
+    int length = 3;
     struct Snake **ptrs = initSnake();
     initMap();
     direction t =LEFT;
@@ -22,10 +22,9 @@ int main()
         t=getd(t);
         score=(length-2)*10;
         length = moveSnake(ptrs,length,t);
-        mvaddch(MAP_H+1,MAP_L+2,' ');
     }
-    terminate(length,score);
+    terminate(score);
     getchar();
-    endwin(); /* 结束curses 模式*/
+    endwin();
     return 0;
 }

@@ -4,7 +4,7 @@
 
 这个小玩具是我用来练手的，基本上涵盖了C语言全部内容
 
-这只是一个拿来练手的小玩具，自然有很多问题！
+这只是一个拿来练手的小玩具，自然有很多问题！后续将慢慢地修正
 
 ## 如何Play
 
@@ -37,7 +37,7 @@ sudo apt install libncurses-dev
 或者可以：
 
 ```
-gcc main.c evosnake.c evosnake.h  util.h -O1 -o EvoSnake -lncurses
+gcc main.c evosnake.c evosnake.h  util.h -Wall -O3 -o EvoSnake -lncurses
 ```
 
 随后你会得到一个无error无warning的可执行文件EvoSnake
