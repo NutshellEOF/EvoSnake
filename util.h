@@ -8,7 +8,7 @@
 #define MAP_L 60
 #define MAP_H 18
 
-//Color setup
+//Color Pair Setup
 #define WALL_PAIR 1
 #define SNAKE_PAIR 2
 #define FOOD_PAIR 3

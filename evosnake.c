@@ -35,6 +35,7 @@ void init() {
     }
     map = (MapBlock *) malloc(sizeof(MapBlock) * (MAP_L + 2) * (MAP_H + 2));
     start_color();
+    //Color Pair Init
     init_pair(WALL_PAIR, COLOR_WHITE, COLOR_WHITE);
     init_pair(SNAKE_PAIR, COLOR_CYAN, COLOR_BLACK);
     init_pair(FOOD_PAIR, COLOR_RED, COLOR_BLACK);
@@ -44,12 +45,10 @@ void init() {
 
 char blockDisplay(int stat) {
     switch (stat) {
-        case -1:
-            return ' ';
         case 3:
-            return '*';
+            return '$';
         case 2:
-            return 'O';
+            return 'o';
         case 1:
             return '@';
         default:
@@ -58,6 +57,10 @@ char blockDisplay(int stat) {
 }
 
 void initMap() {
+    attron(COLOR_PAIR(MSG_PAIR));
+    mvprintw(START_Y-1, START_X, "EvoSnake v1.3");
+    mvprintw(START_Y-1, START_X+MAP_L-12, "By NutshellEOF");
+    attroff(COLOR_PAIR(MSG_PAIR));
     attron(COLOR_PAIR(WALL_PAIR));
     for (int i = 0; i < (MAP_H+2)*(MAP_L+2); ++i) {
         map[i].x = i % (MAP_L + 2);
@@ -87,10 +90,8 @@ void drawMap(int changeId, int pairId) {
 
 void gFood() {
     srand(time(NULL));
-    int fid = rand() % ((MAP_H+2)*(MAP_L+2));
-    while (map[fid].stat != 0){
-        fid = rand() % ((MAP_H+2)*(MAP_L+2));
-    }
+    int fid;
+    while (map[fid = rand() % ((MAP_H+2)*(MAP_L+2))].stat != 0);
     map[fid].stat = 3;
     drawMap(fid, FOOD_PAIR);
 }
@@ -124,10 +125,7 @@ struct Snake **initSnake() {
     map[head].stat = 1;
     map[head+1].stat = 2;
     map[head+2].stat = 2;
-    attron(COLOR_PAIR(MSG_PAIR));
-    mvprintw(START_Y-1, START_X, "EvoSnake v1.3");
-    mvprintw(START_Y-1, START_X+MAP_L-12, "By NutshellEOF");
-    attroff(COLOR_PAIR(MSG_PAIR));
+
     drawMap(head, SNAKE_PAIR);
     drawMap(head+1, SNAKE_PAIR);
     drawMap(head+2, SNAKE_PAIR);
@@ -147,6 +145,8 @@ struct Snake **initSnake() {
     sbody2->dest = head+2;
     sbody2->pre=sbody1;
     sbody2->next = NULL;
+
+
     //使用数组存储链表头尾节点
     struct Snake **ptrs = (struct Snake **)malloc(sizeof(struct Snake *)*2);
 
@@ -207,10 +207,10 @@ int moveSnake(struct Snake **ptrs,int length, direction t) {
     return length;
 }
 
-void terminate(int score) {
+void terminate(int length) {
     attron(COLOR_PAIR(MSG_PAIR));
     mvaddstr((MAP_H+1)/2+START_Y,(MAP_L+1)/2-4+START_X,"You lost.");
-    mvprintw((MAP_H+1)/2+1+START_Y,(MAP_L+1)/2-4+START_X,"Score: %d",score);
+    mvprintw((MAP_H+1)/2+1+START_Y,(MAP_L+1)/2-4+START_X,"Score: %d0", length-3);
     refresh();
     attroff(COLOR_PAIR(MSG_PAIR));
 }
