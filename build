@@ -1,2 +1,2 @@
 #!/bin/bash
-gcc main.c evosnake.c evosnake.h util.h -Wall -o evosnake -O3 -lncurses
+gcc main.c evosnake.c evosnake.h util.h -Wall -o evosnake -O2 -lncurses

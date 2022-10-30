@@ -23,6 +23,6 @@ direction getd(direction pt);
 
 int moveSnake(struct Snake **ptrs, int length, direction t);
 
-void terminate(int score);
+void terminate(int length);
 
 #endif //EVOSNAKE_EVOSNAKE_H

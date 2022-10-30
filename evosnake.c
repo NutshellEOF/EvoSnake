@@ -16,7 +16,7 @@ void init() {
     noecho();
     cbreak();
     keypad(stdscr,TRUE);
-    curs_set(0);
+    curs_set(0); //不显示光标
     halfdelay(3);
     if (has_colors() == FALSE) {
         printf("Your terminal does not support color.\n");
@@ -112,7 +112,7 @@ direction getd(direction pt) {
             tmp = RIGHT;
             break;
     }
-    (tmp+pt == 0)?tmp=pt:tmp;
+    tmp=(tmp+pt == 0)?pt:tmp;
     return tmp;
 }
 

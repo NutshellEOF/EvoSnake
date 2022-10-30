@@ -37,7 +37,7 @@ sudo apt install libncurses-dev
 或者可以：
 
 ```
-gcc main.c evosnake.c evosnake.h  util.h -Wall -O3 -o EvoSnake -lncurses
+gcc main.c evosnake.c evosnake.h  util.h -Wall -O2 -o evosnake -lncurses
 ```
 
 随后你会得到一个无error无warning的可执行文件EvoSnake

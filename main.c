@@ -6,18 +6,13 @@
 #include "util.h"
 #include "evosnake.h"
 
-/*
-Compile: gcc *.c -lncurses
-*/
-int main()
-{
+int main() {
     init();
     int length = 3;
     struct Snake **ptrs = initSnake();
     initMap();
     direction t = LEFT;
     gFood();
-    int score=0;
     while (length!=0) {
         t=getd(t);
         length = moveSnake(ptrs,length,t);
