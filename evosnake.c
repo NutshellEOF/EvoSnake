@@ -9,6 +9,7 @@
 #include "util.h"
 
 MapBlock *map;
+struct Snake **ptrs;
 
 void init() {
     //设置窗口
@@ -148,7 +149,7 @@ struct Snake **initSnake() {
 
 
     //使用数组存储链表头尾节点
-    struct Snake **ptrs = (struct Snake **)malloc(sizeof(struct Snake *)*2);
+    ptrs = (struct Snake **)malloc(sizeof(struct Snake *)*2);
 
     ptrs[0] = shead;//头节点
     ptrs[1] = sbody2;//尾节点
@@ -156,7 +157,7 @@ struct Snake **initSnake() {
     return ptrs;
 }
 
-int moveSnake(struct Snake **ptrs,int length, direction t) {
+int moveSnake(int length, direction t) {
     /* 这些代码先后顺序非常重要，谨慎更改！ */
     struct Snake *nhead = (struct Snake *) malloc(sizeof(struct Snake)); //新的头节点
 
@@ -213,4 +214,14 @@ void terminate(int length) {
     mvprintw((MAP_H+1)/2+1+START_Y,(MAP_L+1)/2-4+START_X,"Score: %d0", length-3);
     refresh();
     attroff(COLOR_PAIR(MSG_PAIR));
+    getchar();
+    endwin();
+    free(map);
+    struct Snake *p = ptrs[0];
+    while (p->next!=NULL) {
+        p=p->next;
+        free(p->pre);
+    }
+    free(p);
+    free(ptrs);
 }

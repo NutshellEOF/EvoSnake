@@ -14,3 +14,5 @@ add_executable(EvoSnake
         evosnake.h evosnake.c)
 
 target_link_libraries(EvoSnake ncurses)
+
+set(CMAKE_C_FLAGS "-fsanitize=address")

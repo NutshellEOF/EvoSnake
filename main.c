@@ -1,24 +1,22 @@
 //
 // Created by NutshellEOF on 2022/10/2.
 //
-
-#include <curses.h>
 #include "util.h"
 #include "evosnake.h"
 
 int main() {
     init();
     int length = 3;
-    struct Snake **ptrs = initSnake();
+    initSnake();
     initMap();
     direction t = LEFT;
     gFood();
-    while (length!=0) {
+    int tmp=length;
+    while (tmp!=0) {
         t=getd(t);
-        length = moveSnake(ptrs,length,t);
+        tmp = moveSnake(length,t);
+        length=(tmp==0)?length:tmp;
     }
     terminate(length);
-    getchar();
-    endwin();
     return 0;
 }

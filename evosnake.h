@@ -21,7 +21,7 @@ struct Snake **initSnake();
 
 direction getd(direction pt);
 
-int moveSnake(struct Snake **ptrs, int length, direction t);
+int moveSnake(int length, direction t);
 
 void terminate(int length);
 
