@@ -6,12 +6,8 @@
 
 int main() {
     init();
-    int length = 3;
-    initSnake();
-    initMap();
-    direction t = LEFT;
-    gFood();
-    int tmp=length;
+    int length = 3,tmp=length;
+    int t = LEFT;
     while (tmp!=0) {
         t=getd(t);
         tmp = moveSnake(length,t);

@@ -32,7 +32,8 @@ sudo apt install libncurses-dev
 
 ## 如何编译
 
-我在项目里配置了`CMake`你可以直接编译
+我在项目里配置了`CMake`你可以在clion中直接编译
+也可以执行./build文件
 
 或者可以：
 
@@ -40,7 +41,7 @@ sudo apt install libncurses-dev
 gcc main.c evosnake.c evosnake.h  util.h -Wall -O2 -o evosnake -lncurses
 ```
 
-随后你会得到一个无error无warning的可执行文件EvoSnake
+随后你会得到一个无error无warning的可执行文件evosnake
 
 ## 实现原理
 

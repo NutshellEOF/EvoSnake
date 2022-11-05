@@ -8,11 +8,9 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_COMPILER /usr/bin/gcc)
 set(CMAKE_CXX_COMPILER /usr/bin/g++)
 
-add_executable(EvoSnake
-        main.c
-        util.h
-        evosnake.h evosnake.c)
+add_executable(EvoSnake main.c util.h evosnake.h evosnake.c)
 
 target_link_libraries(EvoSnake ncurses)
 
-set(CMAKE_C_FLAGS "-fsanitize=address")
+#Only for debug use
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")

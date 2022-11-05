@@ -24,8 +24,6 @@
 #define START_Y getmaxy(stdscr)/2-MAP_H/2-1
 #define START_X getmaxx(stdscr)/2-MAP_L/2-1
 
-typedef int direction;
-
 typedef struct {
     int x;
     int y;

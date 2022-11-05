@@ -6,6 +6,10 @@
 #define EVOSNAKE_EVOSNAKE_H
 
 #include "util.h"
+#include <curses.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
 
 extern MapBlock *map;
 
@@ -17,11 +21,11 @@ void drawMap(int changeId, int pairId);
 
 void gFood();
 
-struct Snake **initSnake();
+void initSnake();
 
-direction getd(direction pt);
+int getd(int pt);
 
-int moveSnake(int length, direction t);
+int moveSnake(int length, int t);
 
 void terminate(int length);
 
