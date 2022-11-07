@@ -1,10 +1,12 @@
 ## EvoSnake介绍
 
+![pic](https://ghproxy.com/raw.githubusercontent.com/NutshellEOF/EvoSnake/main/pic/Snipaste_2022-11-07_23-19-15.png)
+
 一个在你的unix终端中运行的贪吃蛇小游戏
 
 这个小玩具是我用来练手的，基本上涵盖了C语言全部内容
 
-这只是一个拿来练手的小玩具，自然有很多问题！后续将慢慢地修正
+这只是一个拿来练手的小玩具，后续将慢慢地修正
 
 ## 如何Play
 

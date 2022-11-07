@@ -16,13 +16,15 @@
 #define DHEAD_PAIR 5
 
 //这样设置是为了免判断直接确定位置
-#define UP      (-MAP_L-2)
-#define DOWN    (MAP_L+2)
+#define UP      (-MAP_L)
+#define DOWN    (MAP_L)
 #define LEFT    (-1)
 #define RIGHT   1
 
 #define START_Y getmaxy(stdscr)/2-MAP_H/2-1
 #define START_X getmaxx(stdscr)/2-MAP_L/2-1
+
+#define SNAKE_INIT_HDEST (MAP_H/2-1)*MAP_L+MAP_L/2
 
 typedef struct {
     int x;
