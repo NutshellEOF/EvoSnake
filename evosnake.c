@@ -16,13 +16,15 @@ void init() {
     initscr();noecho();cbreak();keypad(stdscr,TRUE);curs_set(0);halfdelay(4);
     //暂不支持在无颜色的模式下运行
     if (!has_colors()) {
+        endwin();
         printf("[Error:2]Your terminal does not support color.\n");
-        endwin();exit(2);
+        exit(2);
     }
     //暂不支持自定义大小，maybe下一次提交会更新？
     if (getmaxy(stdscr) <= MAP_H+3 || getmaxx(stdscr) <= MAP_L+4) {
+        endwin();
         printf("[Error:3]Terminal size error, %dx%d is required.\n",MAP_L+3,MAP_H+4);
-        endwin();exit(3);
+        exit(3);
     }
     map = (MapBlock *) malloc(sizeof(MapBlock) * (MAP_L + 2) * (MAP_H + 2));
     start_color();
@@ -45,7 +47,7 @@ char blockDisplay(int stat) {
 
 void initMap() {
     attron(COLOR_PAIR(MSG_PAIR));
-    mvprintw(START_Y-2, START_X-1, "EvoSnake v1.6");
+    mvprintw(START_Y-2, START_X-1, "EvoSnake v1.7");
     mvprintw(START_Y-2, START_X+MAP_L-13, "By NutshellEOF");
     attroff(COLOR_PAIR(MSG_PAIR));
     for (int i = 0; i < MAP_H*MAP_L; ++i) {
@@ -124,17 +126,10 @@ int drawDhead(int dest) {
 }
 
 int moveSnake(int length, int t) {
-    int  pdest=ptrs[0]->dest, ndest=pdest+t;
+    int  pdest=ptrs[0]->dest, ndest=pdest+t, f=0;//先移动头部再添加新元素
     if (validDest(pdest, t)) {//首先判断是否超出地图，以免越界读写
         if (map[ndest].stat==2) return drawDhead(pdest);
-        else if (map[ndest].stat==3) {
-            struct Snake *addedtail = (struct Snake *)malloc(sizeof(struct Snake));
-            length++;gFood();
-            addedtail->dest = ptrs[1]->dest-t;addedtail->next = NULL;addedtail->pre = ptrs[1];
-            ptrs[1]->next = addedtail;ptrs[1] = addedtail;
-            map[addedtail->dest].stat = 2;
-            drawMap(addedtail->dest, SNAKE_PAIR);
-        }
+        else if (map[ndest].stat==3) { length++;gFood();f=1; }
     } else return drawDhead(pdest);
     //这才是真正的开始
     struct Snake *nhead = (struct Snake *) malloc(sizeof(struct Snake));
@@ -152,6 +147,13 @@ int moveSnake(int length, int t) {
     drawMap(tail->dest, SNAKE_PAIR);
     ptrs[1] = tail->pre;free(tail);
     ptrs[1]->next = NULL;
+    if (f==1) {
+        struct Snake *addedtail = (struct Snake *)malloc(sizeof(struct Snake));
+        addedtail->dest = ptrs[1]->dest-t;addedtail->next = NULL;addedtail->pre = ptrs[1];
+        ptrs[1]->next = addedtail;ptrs[1] = addedtail;
+        map[addedtail->dest].stat = 2;
+        drawMap(addedtail->dest, SNAKE_PAIR);
+    }
     return length;
 }
 
